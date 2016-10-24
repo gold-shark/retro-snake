@@ -23,7 +23,7 @@
       
       .integral {
         margin: 30px auto;
-        width: 500px;
+        width: 600px;
         font-size: 16px;
         color: #333;
         line-height: 1.5;
@@ -33,8 +33,8 @@
       .canvas {
         margin: 0 auto;
         display: block;
-        width: 500px;
-        height: 500px;
+        width: 600px;
+        height: 600px;
         border: 1px solid #c8a56f;
         background-color: #ffeaca;
       }
@@ -44,22 +44,23 @@
   <body>
     <p class="integral">按“空格”键暂停，按“回车”键开始，按“方向”键转向</p>
     <p class="integral">得分：<em>0</em></p>
-    <canvas class="canvas" id="canvas" width="500" height="500"></canvas>
+    <canvas class="canvas" id="canvas" width="600" height="600"></canvas>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
       $(function() {
+        var unit = 15;
         var c = document.getElementById('canvas');
         var cxt = c.getContext('2d');
         /* 绘制背景  */
         function drawBackground() {
           cxt.beginPath();
-          for(var i = 0; i <= c.width; i += 20) {
+          for(var i = 0; i <= c.width; i += unit) {
             cxt.moveTo(i, 0);
-            cxt.lineTo(i, 500);
+            cxt.lineTo(i, c.width);
           }
-          for(var i = 0; i <= c.height; i += 20) {
+          for(var i = 0; i <= c.height; i += unit) {
             cxt.moveTo(0, i);
-            cxt.lineTo(500, i);
+            cxt.lineTo(c.height, i);
           }
           cxt.closePath();
           cxt.strokeStyle = '#f1d2a1';
@@ -74,7 +75,7 @@
         /* 绘制点  */
         function drawPoint(point) {
           cxt.fillStyle = '#9d1e39';
-          cxt.fillRect(point.x * 20, point.y * 20, 20, 20);
+          cxt.fillRect(point.x * unit, point.y * unit, unit, unit);
         };
         /* 绘制蛇  */
         function drawSnake(snake) {
@@ -83,19 +84,19 @@
             if(i !== '0') {
               cxt.fillStyle = '#a3752d';
             }
-            cxt.fillRect(snake.points[i].x * 20, snake.points[i].y * 20, 20, 20);
+            cxt.fillRect(snake.points[i].x * unit, snake.points[i].y * unit, unit, unit);
           }
         };
         /* 点类 */
         function Point(x, y) {
-          this.x = typeof x === 'undefined' ? Math.floor(Math.random() * 25) : x;
-          this.y = typeof y === 'undefined' ? Math.floor(Math.random() * 25) : y;
+          this.x = typeof x === 'undefined' ? Math.floor(Math.random() * c.width / unit) : x;
+          this.y = typeof y === 'undefined' ? Math.floor(Math.random() * c.height / unit) : y;
           this.isExist = true;
         };
         /* 蛇类 */
         function Snake(x, y, leg) {
-          this.x = typeof x === 'undefined' ? Math.floor(Math.random() * 15) + 5 : x;
-          this.y = typeof y === 'undefined' ? Math.floor(Math.random() * 15) + 5 : y;
+          this.x = typeof x === 'undefined' ? Math.floor(Math.random() * (c.width / unit - 10)) + 5 : x;
+          this.y = typeof y === 'undefined' ? Math.floor(Math.random() * (c.height / unit - 10)) + 5 : y;
           this.leg = leg || 3;
           this.points = []; //点集
           this.direction = Math.ceil(Math.random() * 4) + 36;
@@ -121,7 +122,7 @@
                 break;
             }
             var p = new Point(x, y);
-            if(x < 0 || x > 24 || y < 0 || y > 24 || this.isBite(p)) {
+            if(x < 0 || x > (c.width / unit - 1) || y < 0 || y > (c.height / unit - 1) || this.isBite(p)) {
               this.isOver = true;
             } else {
               if(this.eat(point)) {
