@@ -202,7 +202,6 @@
             alert('Game Over');
             clearInterval(intervalObj);
           }
-          $(document).on('keydown', fun);
         };
         /* 初始化  */
         function init() {
@@ -227,7 +226,10 @@
           timeOutObj = setTimeout(function() {
             if(e.which >= 37 && e.which <= 40) {
               if(Math.abs(snake.direction - e.which) !== 2) {
-                _this.off('keydown'); //防止快速回身
+                _this.off('keydown');
+                setTimeout(function() {
+                  _this.on('keydown', fun);
+                }, time);
                 snake.direction = e.which;
               }
             }
