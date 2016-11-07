@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <style type="text/css">
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      html {
+        font-size: 62.5%;
+        font-family: arial, verdana, sans-serif;
+      }
+      
+      body {
+        font-size: 100%;
+        background: #fff;
+      }
+      
+      .integral {
+        margin: 30px auto;
+        width: 600px;
+        font-size: 16px;
+        color: #333;
+        line-height: 1.5;
+        text-align: center;
+      }
+      
+      .canvas {
+        margin: 0 auto;
+        display: block;
+        width: 600px;
+        height: 600px;
+        border: 1px solid #c8a56f;
+        background-color: #ffeaca;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p class="integral">按“空格”键暂停，按“回车”键开始，按“方向”键转向</p>
+    <p class="integral">得分：<em>0</em></p>
+    <canvas class="canvas" id="canvas" width="600" height="600"></canvas>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/snake.js"></script>
+  </body>
+
+</html>
